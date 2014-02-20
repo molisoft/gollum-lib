@@ -26,14 +26,14 @@ context "remote_code" do
     rendered = Gollum::Markup.new(p).render
 
     # we expect
-    expected = %Q{<p>a</p>\n\n<div class=\"highlight\"><pre><span class=\"nt\">&lt;ol</span> <span class=\"na\">class=</span><span class=\"s\">\"tree\"</span><span class=\"nt\">&gt;</span>\n  <span class=\"nt\">&lt;li</span> <span class=\"na\">class=</span><span class=\"s\">\"file\"</span><span class=\"nt\">&gt;</span>\n    <span class=\"nt\">&lt;a</span> <span class=\"na\">href=</span><span class=\"s\">\"0\"</span><span class=\"nt\">&gt;&lt;span</span> <span class=\"na\">class=</span><span class=\"s\">\"icon\"</span><span class=\"nt\">&gt;&lt;/span&gt;</span>0<span class=\"nt\">&lt;/a&gt;</span>\n  <span class=\"nt\">&lt;/li&gt;</span>\n<span class=\"nt\">&lt;/ol&gt;</span>\n</pre></div>\n\n<p>b</p>}
+    expected = %Q{<p>a</p>\n\n<pre class="highlight"><span class="nt">&lt;ol</span> <span class="na">class=</span><span class="s">"tree"</span><span class="nt">&gt;</span>\n  <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"file"</span><span class="nt">&gt;</span>\n    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"0"</span><span class="nt">&gt;&lt;span</span> <span class="na">class=</span><span class="s">"icon"</span><span class="nt">&gt;&lt;/span&gt;</span>0<span class="nt">&lt;/a&gt;</span>\n  <span class="nt">&lt;/li&gt;</span>\n<span class="nt">&lt;/ol&gt;</span>\n</pre>\n\n<p>b</p>\n}
     assert_html_equal expected, rendered
   end
 
   test 'contents' do
     g = Gollum::RemoteCode.new 'https://raw.github.com/gollum/gollum-lib/master/test/file_view/1_file.txt'
 
-    expected = %{<ol class=\"tree\">\n  <li class=\"file\">\n    <a href=\"0\"><span class=\"icon\"></span>0</a>\n  </li>\n</ol>\n}
+    expected = %{<ol class="tree">\n  <li class="file">\n    <a href="0"><span class="icon"></span>0</a>\n  </li>\n</ol>\n}
     assert_html_equal expected, g.contents
   end
 
@@ -48,7 +48,7 @@ context "remote_code" do
     @wiki.clear_cache
 
     output = page.formatted_data
-    assert_html_equal %Q{<p>a\n</p><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>\n\n<span class="k">print</span> <span class="n">sys</span><span class="o">.</span><span class="n">maxint</span>\n</pre></div>\n\n<p>b</p>}, output
+    assert_html_equal %Q{<p>a\n</p><pre class="highlight"><span class="kn">import</span> <span class="nn">sys</span>\n\n<span class="k">print</span> <span class="n">sys</span><span class="o">.</span><span class="nb">maxint</span>\n</pre>\n\n<p>b</p>\n}, output
   end
 
   test "remote_code relative local file in subdir" do
@@ -60,7 +60,7 @@ context "remote_code" do
 
     page = @wiki.paged('Pippin', 'foo')
     output = page.formatted_data
-    assert_html_equal %Q{<p>a\n</p><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>\n\n<span class="k">print</span> <span class="n">sys</span><span class="o">.</span><span class="n">maxint</span>\n</pre></div>\n\n<p>b</p>}, output
+    assert_html_equal %Q{<p>a\n</p><pre class="highlight"><span class="kn">import</span> <span class="nn">sys</span>\n\n<span class="k">print</span> <span class="n">sys</span><span class="o">.</span><span class="nb">maxint</span>\n</pre>\n\n<p>b</p>\n}, output
   end
 
   test "remote_code relative no file" do
@@ -80,7 +80,7 @@ context "remote_code" do
     @wiki.clear_cache
 
     output = page.formatted_data
-    assert_html_equal %Q{<p>a\n</p><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>\n\n<span class="k">print</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span>\n</pre></div>\n\n<p>b</p>}, output
+    assert_html_equal %Q{<p>a\n</p><pre class="highlight"><span class="kn">import</span> <span class="nn">sys</span>\n\n<span class="k">print</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span>\n</pre>\n\n<p>b</p>\n}, output
   end
 
   test "remote_code absolute no file" do
